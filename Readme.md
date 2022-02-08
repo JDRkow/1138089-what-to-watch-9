@@ -1,7 +1,7 @@
 # Личный проект «Что посмотреть»
 
 * Студент: [Oleg Kl](https://up.htmlacademy.ru/react/9/user/1138089).
-* Наставник: `Неизвестно`.
+* Наставник: [Евгений Казаков](https://htmlacademy.ru/profile/id343981).
 
 ---
 
