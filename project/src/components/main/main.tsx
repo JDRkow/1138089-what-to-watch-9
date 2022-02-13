@@ -1,5 +1,5 @@
 import { FilmCardProps } from '../../types/filmCardProps';
-import SmallFilmCard from './smallFilmCard/smallFimCard';
+import SmallFilmCard from './smallFilmCard/small-fim-card';
 
 export default function Main({filmCardProps}: {filmCardProps: FilmCardProps}): JSX.Element{
   return(
