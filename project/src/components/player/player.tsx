@@ -1,7 +1,23 @@
-export default function Player(): JSX.Element{
+import { useParams } from 'react-router-dom';
+import { Film } from '../../types/film';
+import { PlayerProps } from '../../types/player-props';
+
+export default function Player({playerProps}: {playerProps: PlayerProps}): JSX.Element{
+  const params = useParams();
+
+  const paramsId = Number(params.id);
+
+  let film: Film;
+
+  paramsId
+    ? film = playerProps.films.filter((currentFilm) => currentFilm.id === +paramsId)[0]
+    : film = playerProps.films[0];
+
+  const {previewImage, runTime} = film;
+
   return(
     <div className="player">
-      <video src="#" className="player__video" poster="img/player-poster.jpg"></video>
+      <video src="#" className="player__video" poster={previewImage}></video>
 
       <button type="button" className="player__exit">Exit</button>
 
@@ -11,7 +27,7 @@ export default function Player(): JSX.Element{
             <progress className="player__progress" value="30" max="100"></progress>
             <div className="player__toggler" >Toggler</div>
           </div>
-          <div className="player__time-value">1:30:29</div>
+          <div className="player__time-value">{runTime}</div>
         </div>
 
         <div className="player__controls-row">
