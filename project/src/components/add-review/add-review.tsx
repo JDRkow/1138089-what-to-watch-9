@@ -1,18 +1,18 @@
-import { Link, useParams } from 'react-router-dom';
-import { AddReviewProps } from '../../types/add-review-props';
+import { Link, Navigate, useParams } from 'react-router-dom';
+// import { AddReviewProps } from '../../types/add-review-props';
 import { Film } from '../../types/film';
 import AddReviewForm from './add-review-form/add-review-form';
 
-export default function AddReview({addReviewProps}: {addReviewProps: AddReviewProps}): JSX.Element{
+export default function AddReview({films}: {films: Film[]}): JSX.Element{
   const params = useParams();
 
   const paramsId = Number(params.id);
 
-  let film: Film;
+  const film = films.find((currentFilm) => currentFilm.id === paramsId);
 
-  paramsId
-    ? film = addReviewProps.films.filter((currentFilm) => currentFilm.id === +paramsId)[0]
-    : film = addReviewProps.films[0];
+  if (film === undefined) {
+    return <Navigate to="/404"  />;
+  }
 
   const {id, name, image, previewImage} = film;
 

@@ -1,19 +1,18 @@
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import { Film } from '../../types/film';
-import { FilmPageProps } from '../../types/film-page-props';
+// import { FilmPageProps } from '../../types/film-page-props';
 
-export default function MoviePage({filmsPageProps}: {filmsPageProps: FilmPageProps}): JSX.Element{
+export default function MoviePage({films}: {films: Film[]}): JSX.Element{
   const params = useParams();
 
   const paramsId = Number(params.id);
 
-  let film: Film;
+  const film = films.find((currentFilm) => currentFilm.id === paramsId);
 
-  paramsId
-    ? film = filmsPageProps.films.filter((currentFilm) => currentFilm.id === +paramsId)[0]
-    : film = filmsPageProps.films[0];
-
+  if (film === undefined) {
+    return <Navigate to="/404"  />;
+  }
   const {id,name, image, previewImage, genre, released, rating, levelRating, scoresCount, directors, starrings} = film;
 
   return(

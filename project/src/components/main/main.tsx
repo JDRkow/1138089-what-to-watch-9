@@ -1,7 +1,8 @@
-import { MainProps } from '../../types/main-props';
+import { Film } from '../../types/film';
+// import { MainProps } from '../../types/main-props';
 import SmallFilmList from './small-film-list/small-film-list';
 
-export default function Main({filmsCardProps}: {filmsCardProps: MainProps}): JSX.Element{
+export default function Main({films}: {films: Film[]}): JSX.Element{
 
   return(
     <body>
@@ -40,10 +41,10 @@ export default function Main({filmsCardProps}: {filmsCardProps: MainProps}): JSX
             </div>
 
             <div className="film-card__desc">
-              <h2 className="film-card__title">{filmsCardProps.films[0].name}</h2>
+              <h2 className="film-card__title">{films[0].name}</h2>
               <p className="film-card__meta">
-                <span className="film-card__genre">{filmsCardProps.films[0].genre}</span>
-                <span className="film-card__year">{filmsCardProps.films[0].released}</span>
+                <span className="film-card__genre">{films[0].genre}</span>
+                <span className="film-card__year">{films[0].released}</span>
               </p>
 
               <div className="film-card__buttons">
@@ -103,7 +104,7 @@ export default function Main({filmsCardProps}: {filmsCardProps: MainProps}): JSX
             </li>
           </ul>
 
-          <SmallFilmList films={filmsCardProps} />
+          <SmallFilmList films={films} />
 
           <div className="catalog__more">
             <button className="catalog__button" type="button">Show more</button>

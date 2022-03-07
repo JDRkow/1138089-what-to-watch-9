@@ -1,23 +1,13 @@
+/* eslint-disable indent */
 import { useState } from 'react';
 
 export default function AddReviewForm(): JSX.Element {
   const [reviewText, setReviewText] = useState('');
-  const [rating, setRating] = useState(6);
-
-  const ratingStars = [];
-
-  for (let value = 0; value <= 9; value++) {
-    ratingStars.push(value);
-  }
-
-  const ratingStarsList = ratingStars.reverse().map((value) => <ReviewStars key={value} setState={setRating} value={value} rating={rating} /> );
 
   return (
     <form action="#" className="add-review__form">
       <div className="rating">
-        <div className="rating__stars">
-          {ratingStarsList}
-        </div>
+          <ReviewStars />
       </div>
 
       <div className="add-review__text">
@@ -32,18 +22,23 @@ export default function AddReviewForm(): JSX.Element {
 }
 
 
-type ReviewStarsProps = {
-  value: number;
-  rating: number;
-  setState: (rating: number) => void;
-}
+function ReviewStars(): JSX.Element {
+  const ratingStarsCount = [];
 
+  for (let value = 1; value <= 10; value++) {
+    ratingStarsCount.push(value);
+  }
 
-function ReviewStars({value, rating, setState}: ReviewStarsProps): JSX.Element {
+  const [rating, setRating] = useState(6);
+
   return (
-    <>
-      <input onChange={() => setState(value)} className="rating__input" id={`star-${value}`} type="radio" name="rating" value={value} checked={value === rating} />
-      <label className="rating__label" htmlFor={`star-${value}`}>Rating {value}</label>
-    </>
+    <div className="rating__stars">
+      {ratingStarsCount.reverse().map((value) =>
+        (<>
+          <input onChange={() => setRating(value)} className="rating__input" id={`star-${value}`} type="radio" name="rating" value={value} checked={value === rating} />
+          <label className="rating__label" htmlFor={`star-${value}`}>Rating {value}</label>
+         </>),
+      )}
+    </div>
   );
 }

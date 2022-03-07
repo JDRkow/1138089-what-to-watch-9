@@ -9,16 +9,16 @@ import MyList from '../my-list/my-list';
 import Player from '../player/player';
 import PrivateRoute from '../private-route/private-route';
 
-function App({appProps}: {appProps: AppProps}): JSX.Element {
+function App({films}: AppProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path='/' element={<Main filmsCardProps={appProps}/>} />
+        <Route path='/' element={<Main films={films}/>} />
         <Route path='/login' element={<AuthPage/>} />
         <Route path='/mylist' element={<PrivateRoute hasAuthorize={false}><MyList/></PrivateRoute>}/>
-        <Route path='/films/:id' element={<MoviePage filmsPageProps={appProps}/>} />
-        <Route path='/films/:id/review' element={<AddReview addReviewProps={appProps}/>} />
-        <Route path='/player/:id' element={<Player playerProps={appProps}/>} />
+        <Route path='/films/:id' element={<MoviePage films={films}/>} />
+        <Route path='/films/:id/review' element={<AddReview films={films}/>} />
+        <Route path='/player/:id' element={<Player films={films}/>} />
         <Route path="*" element={<NotFoundPage/>}/>
       </Routes>
     </BrowserRouter>

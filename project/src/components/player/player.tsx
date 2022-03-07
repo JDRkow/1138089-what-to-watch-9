@@ -1,8 +1,8 @@
 import { useParams } from 'react-router-dom';
 import { Film } from '../../types/film';
-import { PlayerProps } from '../../types/player-props';
+// import { PlayerProps } from '../../types/player-props';
 
-export default function Player({playerProps}: {playerProps: PlayerProps}): JSX.Element{
+export default function Player({films}: {films: Film[]}): JSX.Element{
   const params = useParams();
 
   const paramsId = Number(params.id);
@@ -10,8 +10,8 @@ export default function Player({playerProps}: {playerProps: PlayerProps}): JSX.E
   let film: Film;
 
   paramsId
-    ? film = playerProps.films.filter((currentFilm) => currentFilm.id === +paramsId)[0]
-    : film = playerProps.films[0];
+    ? film = films.filter((currentFilm) => currentFilm.id === +paramsId)[0]
+    : film = films[0];
 
   const {previewImage, runTime} = film;
 
