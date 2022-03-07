@@ -1,11 +1,26 @@
-export default function MoviePage(): JSX.Element{
+import { Link, Navigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import { Film } from '../../types/film';
+// import { FilmPageProps } from '../../types/film-page-props';
+
+export default function MoviePage({films}: {films: Film[]}): JSX.Element{
+  const params = useParams();
+
+  const paramsId = Number(params.id);
+
+  const film = films.find((currentFilm) => currentFilm.id === paramsId);
+
+  if (film === undefined) {
+    return <Navigate to="/404"  />;
+  }
+  const {id,name, image, previewImage, genre, released, rating, levelRating, scoresCount, directors, starrings} = film;
+
   return(
     <>
-
       <section className="film-card film-card--full">
         <div className="film-card__hero">
           <div className="film-card__bg">
-            <img src="img/bg-the-grand-budapest-hotel.jpg" alt="The Grand Budapest Hotel" />
+            <img src={previewImage} alt={name} />
           </div>
 
           <h1 className="visually-hidden">WTW</h1>
@@ -33,10 +48,10 @@ export default function MoviePage(): JSX.Element{
 
           <div className="film-card__wrap">
             <div className="film-card__desc">
-              <h2 className="film-card__title">The Grand Budapest Hotel</h2>
+              <h2 className="film-card__title">{name}</h2>
               <p className="film-card__meta">
-                <span className="film-card__genre">Drama</span>
-                <span className="film-card__year">2014</span>
+                <span className="film-card__genre">{genre}</span>
+                <span className="film-card__year">{released}</span>
               </p>
 
               <div className="film-card__buttons">
@@ -52,7 +67,7 @@ export default function MoviePage(): JSX.Element{
                   </svg>
                   <span>My list</span>
                 </button>
-                <a href="add-review.html" className="btn film-card__button">Add review</a>
+                <Link className="btn film-card__button" to={`/films/${id}/review`}>Add review</Link>
               </div>
             </div>
           </div>
@@ -61,7 +76,7 @@ export default function MoviePage(): JSX.Element{
         <div className="film-card__wrap film-card__translate-top">
           <div className="film-card__info">
             <div className="film-card__poster film-card__poster--big">
-              <img src="img/the-grand-budapest-hotel-poster.jpg" alt="The Grand Budapest Hotel poster" width="218" height="327" />
+              <img src={image} alt={name} width="218" height="327" />
             </div>
 
             <div className="film-card__desc">
@@ -80,21 +95,19 @@ export default function MoviePage(): JSX.Element{
               </nav>
 
               <div className="film-rating">
-                <div className="film-rating__score">8,9</div>
+                <div className="film-rating__score">{rating}</div>
                 <p className="film-rating__meta">
-                  <span className="film-rating__level">Very good</span>
-                  <span className="film-rating__count">240 ratings</span>
+                  <span className="film-rating__level">{levelRating}</span>
+                  <span className="film-rating__count">{scoresCount} ratings</span>
                 </p>
               </div>
 
               <div className="film-card__text">
-                <p>In the 1930s, the Grand Budapest Hotel is a popular European ski resort, presided over by concierge Gustave H. (Ralph Fiennes). Zero, a junior lobby boy, becomes Gustave&#39;s friend and protege.</p>
+                <p>{film.description}</p>
 
-                <p>Gustave prides himself on providing first-class service to the hotel&#39;s guests, including satisfying the sexual needs of the many elderly women who stay there. When one of Gustave&#39;s lovers dies mysteriously, Gustave finds himself the recipient of a priceless painting and the chief suspect in her murder.</p>
+                <p className="film-card__director"><strong>Dirrector: {directors.map((dirrector) => dirrector.name)}</strong></p>
 
-                <p className="film-card__director"><strong>Director: Wes Anderson</strong></p>
-
-                <p className="film-card__starring"><strong>Starring: Bill Murray, Edward Norton, Jude Law, Willem Dafoe and other</strong></p>
+                <p className="film-card__starring"><strong>Starring: {starrings.map((starring) => `${starring.name  }, `)} and other</strong></p>
               </div>
             </div>
           </div>

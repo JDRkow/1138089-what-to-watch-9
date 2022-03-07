@@ -1,7 +1,9 @@
-import { FilmCardProps } from '../../types/filmCardProps';
-import SmallFilmCard from './small-film-card/small-fim-card';
+import { Film } from '../../types/film';
+// import { MainProps } from '../../types/main-props';
+import SmallFilmList from './small-film-list/small-film-list';
 
-export default function Main({filmCardProps}: {filmCardProps: FilmCardProps}): JSX.Element{
+export default function Main({films}: {films: Film[]}): JSX.Element{
+
   return(
     <body>
       <section className="film-card">
@@ -39,10 +41,10 @@ export default function Main({filmCardProps}: {filmCardProps: FilmCardProps}): J
             </div>
 
             <div className="film-card__desc">
-              <h2 className="film-card__title">{filmCardProps.name}</h2>
+              <h2 className="film-card__title">{films[0].name}</h2>
               <p className="film-card__meta">
-                <span className="film-card__genre">{filmCardProps.genre}</span>
-                <span className="film-card__year">{filmCardProps.releaseYear}</span>
+                <span className="film-card__genre">{films[0].genre}</span>
+                <span className="film-card__year">{films[0].released}</span>
               </p>
 
               <div className="film-card__buttons">
@@ -102,28 +104,7 @@ export default function Main({filmCardProps}: {filmCardProps: FilmCardProps}): J
             </li>
           </ul>
 
-          <div className="catalog__films-list">
-            <SmallFilmCard />
-            <SmallFilmCard />
-            <SmallFilmCard />
-            <SmallFilmCard />
-            <SmallFilmCard />
-            <SmallFilmCard />
-            <SmallFilmCard />
-            <SmallFilmCard />
-            <SmallFilmCard />
-            <SmallFilmCard />
-            <SmallFilmCard />
-            <SmallFilmCard />
-            <SmallFilmCard />
-            <SmallFilmCard />
-            <SmallFilmCard />
-            <SmallFilmCard />
-            <SmallFilmCard />
-            <SmallFilmCard />
-            <SmallFilmCard />
-            <SmallFilmCard />
-          </div>
+          <SmallFilmList films={films} />
 
           <div className="catalog__more">
             <button className="catalog__button" type="button">Show more</button>
