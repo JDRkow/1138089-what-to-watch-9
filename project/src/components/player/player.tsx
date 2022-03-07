@@ -1,17 +1,16 @@
-import { useParams } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router-dom';
 import { Film } from '../../types/film';
-// import { PlayerProps } from '../../types/player-props';
 
 export default function Player({films}: {films: Film[]}): JSX.Element{
   const params = useParams();
 
   const paramsId = Number(params.id);
 
-  let film: Film;
+  const film = films.find((currentFilm) => currentFilm.id === paramsId);
 
-  paramsId
-    ? film = films.filter((currentFilm) => currentFilm.id === +paramsId)[0]
-    : film = films[0];
+  if (film === undefined) {
+    return <Navigate to="/404"  />;
+  }
 
   const {previewImage, runTime} = film;
 

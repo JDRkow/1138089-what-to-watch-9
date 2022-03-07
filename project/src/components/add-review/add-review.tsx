@@ -1,5 +1,4 @@
 import { Link, Navigate, useParams } from 'react-router-dom';
-// import { AddReviewProps } from '../../types/add-review-props';
 import { Film } from '../../types/film';
 import AddReviewForm from './add-review-form/add-review-form';
 
