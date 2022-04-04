@@ -1,19 +1,20 @@
 import { Link, Navigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import { Film } from '../../types/film';
-// import { FilmPageProps } from '../../types/film-page-props';
+import CurrentTab from '../tabs/current-tab';
+import Tabs from '../tabs/tabs';
 
 export default function MoviePage({films}: {films: Film[]}): JSX.Element{
   const params = useParams();
-
   const paramsId = Number(params.id);
+  const activeTab = window.location.hash;
 
   const film = films.find((currentFilm) => currentFilm.id === paramsId);
 
   if (film === undefined) {
     return <Navigate to="/404"  />;
   }
-  const {id,name, image, previewImage, genre, released, rating, levelRating, scoresCount, directors, starrings} = film;
+  const {id,name, image, previewImage, genre, released} = film;
 
   return(
     <>
@@ -80,35 +81,8 @@ export default function MoviePage({films}: {films: Film[]}): JSX.Element{
             </div>
 
             <div className="film-card__desc">
-              <nav className="film-nav film-card__nav">
-                <ul className="film-nav__list">
-                  <li className="film-nav__item film-nav__item--active">
-                    <a href="#" className="film-nav__link">Overview</a>
-                  </li>
-                  <li className="film-nav__item">
-                    <a href="#" className="film-nav__link">Details</a>
-                  </li>
-                  <li className="film-nav__item">
-                    <a href="#" className="film-nav__link">Reviews</a>
-                  </li>
-                </ul>
-              </nav>
-
-              <div className="film-rating">
-                <div className="film-rating__score">{rating}</div>
-                <p className="film-rating__meta">
-                  <span className="film-rating__level">{levelRating}</span>
-                  <span className="film-rating__count">{scoresCount} ratings</span>
-                </p>
-              </div>
-
-              <div className="film-card__text">
-                <p>{film.description}</p>
-
-                <p className="film-card__director"><strong>Dirrector: {directors.map((dirrector) => dirrector.name)}</strong></p>
-
-                <p className="film-card__starring"><strong>Starring: {starrings.map((starring) => `${starring.name  }, `)} and other</strong></p>
-              </div>
+              <Tabs />
+              <CurrentTab activeTab={activeTab} film={film} />
             </div>
           </div>
         </div>
