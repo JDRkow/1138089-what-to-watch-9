@@ -1,8 +1,8 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { MoviePageTabNames } from '../../types/movie-page-tab-names';
 
 export default function Tabs() {
-  const currentTab = window.location.hash;
+  const currentTab = useLocation().hash;
   return (
     <nav className="film-nav film-card__nav">
       <ul className="film-nav__list">
