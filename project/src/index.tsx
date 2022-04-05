@@ -1,15 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
 import App from './components/app/app';
 import { films } from './mocks/films';
-// import { AppProps } from './types/app-props';
-
-// const appProps: AppProps = {
-//   films: films,
-// };
+import { store } from './store';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App films={films}/>
+    <Provider store={store}>
+      <App films={films}/>
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root'));

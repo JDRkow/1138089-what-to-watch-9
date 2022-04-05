@@ -22,7 +22,6 @@ function App({films}: AppProps): JSX.Element {
         <Route path="*" element={<NotFoundPage/>}/>
       </Routes>
     </BrowserRouter>
-
   );
 }
 
