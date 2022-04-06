@@ -1,14 +1,17 @@
 import { Link, Navigate, useLocation } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
-import { Film } from '../../types/film';
+import { useAppSelector } from '../../hooks';
 import SmallFilmList from '../main/small-film-list/small-film-list';
 import CurrentTab from '../tabs/current-tab';
 import Tabs from '../tabs/tabs';
 
-export default function MoviePage({films}: {films: Film[]}): JSX.Element{
+export default function MoviePage(): JSX.Element{
   const params = useParams();
   const paramsId = Number(params.id);
   const activeTab = useLocation().hash;
+
+  const films = useAppSelector((state) => state.films);
+
   const film = films.find((currentFilm) => currentFilm.id === paramsId);
 
   const similarFilms = films.filter((elem) => (elem.genre === film?.genre) && (elem.id !== film?.id));
