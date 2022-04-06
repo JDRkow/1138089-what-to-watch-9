@@ -1,14 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useAppSelector } from '../../hooks';
-import { Film } from '../../types/film';
 import GenresList from '../genres-list/genres-list';
 import SmallFilmList from './small-film-list/small-film-list';
 
-export default function Main({films}: {films: Film[]}): JSX.Element{
+export default function Main(): JSX.Element{
   const currentGenre = useAppSelector((state) => state.activeGenre);
   const [genres, setGenres] = useState<string[]>([]);
+  const films = useAppSelector((state) => state.films);
   const filmsList = (currentGenre === 'All genres') ? films : films.filter(({genre}) => currentGenre === genre);
-
   useEffect(() => {
     setGenres(['All genres', ...new Set(films.map((film) => film.genre))]);
   }, [films]);
