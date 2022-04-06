@@ -13,7 +13,7 @@ function App({films}: AppProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path='/' element={<Main films={films}/>} />
+        <Route path='/' element={<Main/>} />
         <Route path='/login' element={<AuthPage/>} />
         <Route path='/mylist' element={<PrivateRoute hasAuthorize={false}><MyList/></PrivateRoute>}/>
         <Route path='/films/:id' element={<MoviePage films={films}/>} />
@@ -22,7 +22,6 @@ function App({films}: AppProps): JSX.Element {
         <Route path="*" element={<NotFoundPage/>}/>
       </Routes>
     </BrowserRouter>
-
   );
 }
 

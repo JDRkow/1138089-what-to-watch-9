@@ -16,7 +16,7 @@ export const films: Film[] = [
     starrings: [{name: 'Johnny Depp'},{name: 'Katherine Waterston'}, {name: 'Eddie Redmayne'}],
     runTime: 99,
     released: 2014,
-    genre: 'Drama',
+    genre: 'Commedy',
     isFavored: false,
   },
   {
@@ -34,7 +34,7 @@ export const films: Film[] = [
     starrings: [{name: 'Johnny Depp'},{name: 'Katherine Waterston'}, {name: 'Eddie Redmayne'}],
     runTime: 99,
     released: 2014,
-    genre: 'Drama',
+    genre: 'Triller',
     isFavored: false,
   },
   {
@@ -52,7 +52,7 @@ export const films: Film[] = [
     starrings: [{name: 'Johnny Depp'},{name: 'Katherine Waterston'}, {name: 'Eddie Redmayne'}],
     runTime: 99,
     released: 2014,
-    genre: 'Drama',
+    genre: 'Sci-Fi',
     isFavored: false,
   },
   {
@@ -70,7 +70,7 @@ export const films: Film[] = [
     starrings: [{name: 'Johnny Depp'},{name: 'Katherine Waterston'}, {name: 'Eddie Redmayne'}],
     runTime: 99,
     released: 2014,
-    genre: 'Drama',
+    genre: 'Historical',
     isFavored: false,
   },
   {
@@ -88,7 +88,7 @@ export const films: Film[] = [
     starrings: [{name: 'Johnny Depp'},{name: 'Katherine Waterston'}, {name: 'Eddie Redmayne'}],
     runTime: 99,
     released: 2014,
-    genre: 'Drama',
+    genre: 'Comedy',
     isFavored: false,
   },
   {
@@ -106,7 +106,7 @@ export const films: Film[] = [
     starrings: [{name: 'Johnny Depp'},{name: 'Katherine Waterston'}, {name: 'Eddie Redmayne'}],
     runTime: 99,
     released: 2014,
-    genre: 'Drama',
+    genre: 'Romance',
     isFavored: false,
   },
   {
@@ -124,7 +124,7 @@ export const films: Film[] = [
     starrings: [{name: 'Johnny Depp'},{name: 'Katherine Waterston'}, {name: 'Eddie Redmayne'}],
     runTime: 99,
     released: 2014,
-    genre: 'Drama',
+    genre: 'Documentary',
     isFavored: false,
   },
   {
