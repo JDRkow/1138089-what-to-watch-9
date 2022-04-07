@@ -1,16 +1,17 @@
 import { Link, Navigate, useLocation } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
-import { useAppSelector } from '../../hooks';
+// import { useAppSelector } from '../../hooks';
+import { Film } from '../../types/film';
 import SmallFilmList from '../main/small-film-list/small-film-list';
 import CurrentTab from '../tabs/current-tab';
 import Tabs from '../tabs/tabs';
 
-export default function MoviePage(): JSX.Element{
+export default function MoviePage({films}: {films: Film[]}): JSX.Element{
   const params = useParams();
   const paramsId = Number(params.id);
   const activeTab = useLocation().hash;
 
-  const films = useAppSelector((state) => state.films);
+  // const films = useAppSelector((state) => state.films);
 
   const film = films.find((currentFilm) => currentFilm.id === paramsId);
 
@@ -20,7 +21,7 @@ export default function MoviePage(): JSX.Element{
   if (film === undefined) {
     return <Navigate to="/404"  />;
   }
-  const {id,name, image, previewImage, genre, released} = film;
+  const {id,name, backgroundImage, previewImage, genre, released} = film;
 
   return(
     <>
@@ -83,7 +84,7 @@ export default function MoviePage(): JSX.Element{
         <div className="film-card__wrap film-card__translate-top">
           <div className="film-card__info">
             <div className="film-card__poster film-card__poster--big">
-              <img src={image} alt={name} width="218" height="327" />
+              <img src={backgroundImage} alt={name} width="218" height="327" />
             </div>
 
             <div className="film-card__desc">

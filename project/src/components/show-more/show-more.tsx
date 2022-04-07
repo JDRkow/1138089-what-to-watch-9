@@ -1,17 +1,18 @@
-import { useAppDispatch } from '../../hooks';
-import { incrementFilmsCount } from '../../store/action';
-
-export default function ShowMore(): JSX.Element {
-  const dispatch = useAppDispatch();
+export default function ShowMore({countFilms, setState}: ShowMoreProps): JSX.Element {
   return (
     <div className="catalog__more">
       <button
         className="catalog__button"
         type="button"
-        onClick={() => dispatch(incrementFilmsCount())}
+        onClick={() => setState(countFilms+8)}
       >
         Show more
       </button>
     </div>
   );
+}
+
+type ShowMoreProps = {
+  countFilms: number
+  setState: (countFilms: number) => void;
 }

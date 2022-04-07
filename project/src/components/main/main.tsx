@@ -1,22 +1,17 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useAppSelector } from '../../hooks';
 import GenresList from '../genres-list/genres-list';
 import ShowMore from '../show-more/show-more';
 import SmallFilmList from './small-film-list/small-film-list';
 
 export default function Main(): JSX.Element{
-  const currentGenre = useAppSelector((state) => state.activeGenre);
   const films = useAppSelector((state) => state.films);
-  const countFilmShow = useAppSelector((state) => state.countFilmShow);
+  const currentGenre = useAppSelector((state) => state.activeGenre);
 
-  const [genres, setGenres] = useState<string[]>([]);
+  const [countFilmShow, setCountFilmShow] = useState(8);
 
   const filmsList = (currentGenre === 'All genres') ? films : films.filter(({genre}) => currentGenre === genre);
-
-  useEffect(() => {
-    setGenres(['All genres', ...new Set(films.map((film) => film.genre))]);
-  }, [films]);
-
+  const genres =  ([...new Set(['All genres', ...films.map((film) => film.genre)])]);
 
   return(
     <body>
@@ -86,7 +81,7 @@ export default function Main(): JSX.Element{
           <h2 className="catalog__title visually-hidden">Catalog</h2>
           <GenresList genres={genres} />
           <SmallFilmList films={filmsList.slice(0, countFilmShow)} />
-          {countFilmShow < filmsList.length ? <ShowMore /> : ''}
+          {countFilmShow < filmsList.length ? <ShowMore countFilms={countFilmShow} setState={setCountFilmShow} /> : ''}
         </section>
 
         <footer className="page-footer">

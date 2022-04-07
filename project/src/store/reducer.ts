@@ -1,5 +1,4 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { films } from '../mocks/films';
 import { Film } from '../types/film';
 import { incrementFilmsCount, resetFilmsCount, setCurrentGenre, setError, setFilms } from './action';
 
@@ -13,7 +12,7 @@ type State = {
 
 const initialState: State = {
   activeGenre: 'All genres',
-  films: films,
+  films: [],
   countFilmShow: 8,
   error: '',
   isDataLoaded: false,
