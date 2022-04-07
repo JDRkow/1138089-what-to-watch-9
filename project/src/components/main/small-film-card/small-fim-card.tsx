@@ -4,7 +4,7 @@ import { Film } from '../../../types/film';
 import VideoPreview from '../video-preview/video-preview';
 
 export default function SmallFilmCard({film}: {film: Film}): JSX.Element{
-  const { id, previewImage, name, previewVideoUrl} = film;
+  const { id, previewImage, name, previewVideoLink} = film;
   const [isActive, setIsActive] = useState(false);
 
   let playbleTimeout: number | null;
@@ -26,7 +26,7 @@ export default function SmallFilmCard({film}: {film: Film}): JSX.Element{
         onMouseEnter={handleMouseOver}
         onMouseLeave={handleMouseLeft}
       >
-        <VideoPreview src={previewVideoUrl} poster={previewImage} isActive={isActive} />
+        <VideoPreview src={previewVideoLink} poster={previewImage} isActive={isActive} />
       </div>
       <h3 className="small-film-card__title">
         <Link className="small-film-card__link" to={`/films/${id}`}>{name}</Link>
