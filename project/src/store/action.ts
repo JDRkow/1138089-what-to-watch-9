@@ -6,7 +6,6 @@ export const setCurrentGenre = createAction('set current genre', (genre) => ({
 }));
 
 export const setFilms = createAction<Film[]>('set current film');
-
 export const setError = createAction<string>('set error');
 
 export const incrementFilmsCount = createAction('set films count');
