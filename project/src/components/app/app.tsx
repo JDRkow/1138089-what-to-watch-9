@@ -13,6 +13,7 @@ import LoadingScreen from '../loading-screen/loading-screen';
 function App(): JSX.Element {
   const isDataLoaded = useAppSelector((state) => state.isDataLoaded);
   const films = useAppSelector((state) => state.films);
+  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
 
   if (!isDataLoaded) {
     return (
@@ -25,7 +26,7 @@ function App(): JSX.Element {
       <Routes>
         <Route path='/' element={<Main />} />
         <Route path='/login' element={<AuthPage/>} />
-        <Route path='/mylist' element={<PrivateRoute hasAuthorize={false}><MyList/></PrivateRoute>}/>
+        <Route path='/mylist' element={<PrivateRoute authorizationStatus={authorizationStatus}><MyList/></PrivateRoute>}/>
         <Route path='/films/:id' element={<MoviePage films={films}/>} />
         <Route path='/films/:id/review' element={<AddReview films={films}/>} />
         <Route path='/player/:id' element={<Player films={films}/>} />
