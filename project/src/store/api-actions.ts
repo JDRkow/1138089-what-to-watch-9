@@ -51,6 +51,7 @@ export const checkAuthAction = createAsyncThunk(
     try {
       await api.get('/login');
       store.dispatch(requireAuthorization(AuthorizationStatus.Auth));
+      return true;
     } catch(err) {
       errorHandle(err);
       store.dispatch(requireAuthorization(AuthorizationStatus.NoAuth));

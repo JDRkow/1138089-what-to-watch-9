@@ -7,13 +7,17 @@ import MoviePage from '../movie-page/movie-page';
 import MyList from '../my-list/my-list';
 import Player from '../player/player';
 import PrivateRoute from '../private-route/private-route';
-import { useAppSelector } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import LoadingScreen from '../loading-screen/loading-screen';
+import { checkAuthAction } from '../../store/api-actions';
 
-function App(): JSX.Element {
+export default function App(): JSX.Element {
+  const dispatch = useAppDispatch();
   const isDataLoaded = useAppSelector((state) => state.isDataLoaded);
   const films = useAppSelector((state) => state.films);
+  dispatch(checkAuthAction());
   const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+
 
   if (!isDataLoaded) {
     return (
@@ -35,5 +39,3 @@ function App(): JSX.Element {
     </BrowserRouter>
   );
 }
-
-export default App;

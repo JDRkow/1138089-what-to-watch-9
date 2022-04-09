@@ -1,4 +1,5 @@
-import { FormEvent, useRef } from 'react';
+import { useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../hooks';
 import { loginAction } from '../../store/api-actions';
 import { AuthData } from '../../types/auth-data';
@@ -9,18 +10,22 @@ export default function AuthPage(): JSX.Element{
   const emailInput = useRef<HTMLInputElement>(null);
   const passwordInput = useRef<HTMLInputElement>(null);
 
-  const onSubmit = (authData: AuthData) => {
-    dispatch(loginAction(authData));
-  };
 
-  const submitLoginFormHandler = (evt: FormEvent) => {
-    evt.preventDefault();
-
-    if(emailInput.current !== null && passwordInput.current !== null) {
-      onSubmit({
+  const navigate = useNavigate();
+  const onSubmit = async () => {
+    let authData: AuthData = {
+      email: '',
+      password: '',
+    };
+    if(emailInput.current !== null && passwordInput.current !== null){
+      authData = {
         email: emailInput.current.value,
         password: passwordInput.current.value,
-      });
+      };
+    }
+    const success = await dispatch(loginAction(authData));
+    if (success) {
+      navigate('/');
     }
   };
 
@@ -39,7 +44,7 @@ export default function AuthPage(): JSX.Element{
       </header>
 
       <div className="sign-in user-page__content">
-        <form action="#" className="sign-in__form" onSubmit={submitLoginFormHandler}>
+        <form action="#" className="sign-in__form" onSubmit={onSubmit}>
           <div className="sign-in__fields">
             <div className="sign-in__field">
               <input ref={emailInput} className="sign-in__input" type="email" placeholder="Email address" name="user-email" id="user-email" />
