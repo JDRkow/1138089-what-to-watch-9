@@ -7,15 +7,16 @@ import MoviePage from '../movie-page/movie-page';
 import MyList from '../my-list/my-list';
 import Player from '../player/player';
 import PrivateRoute from '../private-route/private-route';
-import { useAppDispatch, useAppSelector } from '../../hooks';
+import { useAppSelector } from '../../hooks';
 import LoadingScreen from '../loading-screen/loading-screen';
 import { checkAuthAction } from '../../store/api-actions';
+import { store } from '../../store';
+
+store.dispatch(checkAuthAction());
 
 export default function App(): JSX.Element {
-  const dispatch = useAppDispatch();
   const isDataLoaded = useAppSelector((state) => state.isDataLoaded);
   const films = useAppSelector((state) => state.films);
-  dispatch(checkAuthAction());
   const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
 
 

@@ -1,8 +1,7 @@
-import { useRef } from 'react';
+import { FormEvent, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../hooks';
 import { loginAction } from '../../store/api-actions';
-import { AuthData } from '../../types/auth-data';
 
 export default function AuthPage(): JSX.Element{
   const dispatch = useAppDispatch();
@@ -12,21 +11,20 @@ export default function AuthPage(): JSX.Element{
 
 
   const navigate = useNavigate();
-  const onSubmit = async () => {
-    let authData: AuthData = {
-      email: '',
-      password: '',
-    };
+  const onSubmit = async (evt: FormEvent) => {
+    evt.preventDefault();
+
     if(emailInput.current !== null && passwordInput.current !== null){
-      authData = {
+
+      const success = await dispatch(loginAction({
         email: emailInput.current.value,
         password: passwordInput.current.value,
-      };
+      }));
+      if (success) {
+        navigate('/');
+      }
     }
-    const success = await dispatch(loginAction(authData));
-    if (success) {
-      navigate('/');
-    }
+
   };
 
   return(
