@@ -20,7 +20,9 @@ export default function MoviePageOverview({film}: {film: Film}): JSX.Element{
 
         <p className="film-card__director"><strong>Dirrector: {director}</strong></p>
 
-        <p className="film-card__starring"><strong>Starring: {starring.join(', ')} and other</strong></p>
+        <p className="film-card__starring">
+          <strong>Starring: {starring} and other</strong>
+        </p>
       </div>
     </>
   );

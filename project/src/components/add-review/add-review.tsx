@@ -62,7 +62,7 @@ export default function AddReview({films}: {films: Film[]}): JSX.Element{
       </div>
 
       <div className="add-review">
-        <AddReviewForm />
+        <AddReviewForm filmId={id} />
       </div>
 
     </section>

@@ -14,7 +14,7 @@ function CurrentTab({activeTab, film}: currentTabProps): JSX.Element {
     case MoviePageTabNames.Details:
       return <MoviePageDetails film={film} />;
     case MoviePageTabNames.Reviews:
-      return <MovieReviewPage/>;
+      return <MovieReviewPage />;
     default:
       return <MoviePageOverview film={film}/>;
   }
