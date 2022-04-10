@@ -28,36 +28,9 @@ export default function MoviePage(): JSX.Element{
 
   const authorizationStatus = useAppSelector((state)=> state.authorizationStatus);
 
-  // if(currentFilm === Object){
-  //   return <Navigate to={'/404'} />;
-  // }
-
-  if(typeof currentFilm === 'undefined'){
+  if(!currentFilm){
     return <Navigate to={'/404'} />;
   }
-
-  // const params = useParams();
-  // const paramsId = Number(params.id);
-
-  // const currentFilm = useAppSelector((state) => state.currentFilm);
-
-  // useEffect(() => {
-  //   store.dispatch(setCurrentFilmAction(paramsId));
-  // }, [paramsId]);
-
-  // const activeTab = useLocation().hash;
-
-  // const films = useAppSelector((state) => state.films);
-  // const authorizationStatus = useAppSelector((state)=> state.authorizationStatus);
-
-  // // const film = films.find((currentFilm) => currentFilm.id === paramsId);
-
-  // const similarFilms = films.filter((elem) => (elem.genre === currentFilm?.genre) && (elem.id !== currentFilm?.id));
-  // const fourSimilarFilms = similarFilms.slice(0, 4);
-
-  // if (currentFilm === null) {
-  //   return <Navigate to="/404"  />;
-  // }
 
   const {id,name, backgroundImage, previewImage, genre, released} = currentFilm as Film;
 
