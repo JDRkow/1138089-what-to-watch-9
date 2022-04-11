@@ -5,8 +5,10 @@ import { errorHandle } from '../services/errors-handler';
 import { dropToken, saveToken } from '../services/token';
 import { AuthData } from '../types/auth-data';
 import { Film } from '../types/film';
+import { Review } from '../types/review';
+import { SendReview } from '../types/send-review';
 import { UserData } from '../types/user-data';
-import { redirectToRoute, requireAuthorization, setFilms } from './action';
+import { redirectToRoute, requireAuthorization, sendReview, setCurrentFilm, setFilms, setReviews, setSimillarFilms } from './action';
 
 export const setFilmsAsync = createAsyncThunk('fetchFilms', async () => {
   try {
@@ -17,6 +19,62 @@ export const setFilmsAsync = createAsyncThunk('fetchFilms', async () => {
   }
 });
 
+
+export const setCurrentFilmAction = createAsyncThunk(
+  'fetchCurrentFilm',
+  async (id: number) => {
+
+    try {
+      const {data} = await api.get<Film>((`/films/${id}`));
+      store.dispatch(setCurrentFilm(data));
+    } catch (error) {
+      errorHandle(error);
+      store.dispatch(redirectToRoute('/404'));
+    }
+  },
+);
+
+export const setReviewsAction = createAsyncThunk(
+  'fetchReviews',
+  async (filmId: number) => {
+
+    try {
+      const {data} = await api.get<Review[]>((`/comments/${filmId}`));
+      store.dispatch(setReviews(data));
+    } catch (error) {
+      errorHandle(error);
+    }
+  },
+);
+
+export const sendReviewAction = createAsyncThunk(
+  'fetchReview',
+  async ({filmId, rating, comment}: SendReview) => {
+    try {
+      await api.post<Review>(`/comments/${filmId}`, {rating, comment});
+      store.dispatch(sendReview(false));
+      store.dispatch(redirectToRoute(`films/${filmId}`));
+    } catch (error) {
+      errorHandle(error);
+      store.dispatch(sendReview(false));
+    }
+  },
+);
+
+export const setSimillarFilmsAction = createAsyncThunk(
+  'fetchSimillarFilms',
+  async (id: number) => {
+
+    try {
+      const {data} = await api.get<Film[]>((`/films/${id}/similar`));
+      store.dispatch(setSimillarFilms(data));
+    } catch (error) {
+      errorHandle(error);
+      store.dispatch(redirectToRoute('/404'));
+    }
+  },
+);
+
 export const loginAction = createAsyncThunk(
   'login',
   async ({email, password}: AuthData) => {
@@ -24,7 +82,7 @@ export const loginAction = createAsyncThunk(
       const {data: {token}} = await api.post<UserData>('/login', {email, password});
       saveToken(token);
       store.dispatch(requireAuthorization(AuthorizationStatus.Auth));
-      store.dispatch(redirectToRoute('/'));
+      return true;
     } catch(error) {
       errorHandle(error);
       store.dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
@@ -33,7 +91,7 @@ export const loginAction = createAsyncThunk(
 );
 
 export const logoutAction = createAsyncThunk(
-  'user/logout',
+  'logout',
   async () => {
     try {
       await api.delete('/logout');
@@ -51,7 +109,6 @@ export const checkAuthAction = createAsyncThunk(
     try {
       await api.get('/login');
       store.dispatch(requireAuthorization(AuthorizationStatus.Auth));
-      return true;
     } catch(err) {
       errorHandle(err);
       store.dispatch(requireAuthorization(AuthorizationStatus.NoAuth));

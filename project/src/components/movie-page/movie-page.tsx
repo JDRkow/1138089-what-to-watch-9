@@ -1,27 +1,38 @@
+import { useEffect } from 'react';
 import { Link, Navigate, useLocation } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
-// import { useAppSelector } from '../../hooks';
+import { AuthorizationStatus } from '../../const';
+import { useAppSelector } from '../../hooks';
+import { store } from '../../store';
+import { setCurrentFilmAction, setReviewsAction, setSimillarFilmsAction } from '../../store/api-actions';
 import { Film } from '../../types/film';
 import SmallFilmList from '../main/small-film-list/small-film-list';
 import CurrentTab from '../tabs/current-tab';
 import Tabs from '../tabs/tabs';
 
-export default function MoviePage({films}: {films: Film[]}): JSX.Element{
+export default function MoviePage(): JSX.Element{
   const params = useParams();
   const paramsId = Number(params.id);
+
+  useEffect(() => {
+    store.dispatch(setCurrentFilmAction(paramsId));
+    store.dispatch(setSimillarFilmsAction(paramsId));
+    store.dispatch(setReviewsAction(paramsId));
+
+  }, [paramsId]);
+
+  const currentFilm = useAppSelector((state) => state.currentFilm);
+  const fourSimilarFilms = useAppSelector((state) => state.simillarFilms);
+
   const activeTab = useLocation().hash;
 
-  // const films = useAppSelector((state) => state.films);
+  const authorizationStatus = useAppSelector((state)=> state.authorizationStatus);
 
-  const film = films.find((currentFilm) => currentFilm.id === paramsId);
-
-  const similarFilms = films.filter((elem) => (elem.genre === film?.genre) && (elem.id !== film?.id));
-  const fourSimilarFilms = similarFilms.slice(0, 4);
-
-  if (film === undefined) {
-    return <Navigate to="/404"  />;
+  if(!currentFilm){
+    return <Navigate to={'/404'} />;
   }
-  const {id,name, backgroundImage, previewImage, genre, released} = film;
+
+  const {id,name, backgroundImage, previewImage, genre, released} = currentFilm as Film;
 
   return(
     <>
@@ -75,7 +86,9 @@ export default function MoviePage({films}: {films: Film[]}): JSX.Element{
                   </svg>
                   <span>My list</span>
                 </button>
-                <Link className="btn film-card__button" to={`/films/${id}/review`}>Add review</Link>
+                {authorizationStatus === AuthorizationStatus.Auth ?
+                  <Link to={`/films/${id}/review`} className="btn film-card__button">Add review</Link>
+                  : null}
               </div>
             </div>
           </div>
@@ -89,7 +102,7 @@ export default function MoviePage({films}: {films: Film[]}): JSX.Element{
 
             <div className="film-card__desc">
               <Tabs />
-              <CurrentTab activeTab={activeTab} film={film} />
+              <CurrentTab activeTab={activeTab} film={currentFilm as Film} />
             </div>
           </div>
         </div>

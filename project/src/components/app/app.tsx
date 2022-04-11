@@ -32,7 +32,7 @@ export default function App(): JSX.Element {
         <Route path='/' element={<Main />} />
         <Route path='/login' element={<AuthPage/>} />
         <Route path='/mylist' element={<PrivateRoute authorizationStatus={authorizationStatus}><MyList/></PrivateRoute>}/>
-        <Route path='/films/:id' element={<MoviePage films={films}/>} />
+        <Route path='/films/:id' element={<MoviePage />} />
         <Route path='/films/:id/review' element={<AddReview films={films}/>} />
         <Route path='/player/:id' element={<Player films={films}/>} />
         <Route path="*" element={<NotFoundPage/>}/>
