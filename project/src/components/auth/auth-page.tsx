@@ -2,6 +2,8 @@ import { FormEvent, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../hooks';
 import { loginAction } from '../../store/api-actions';
+import { toast } from 'react-toastify';
+
 
 export default function AuthPage(): JSX.Element{
   const dispatch = useAppDispatch();
@@ -9,17 +11,20 @@ export default function AuthPage(): JSX.Element{
   const emailInput = useRef<HTMLInputElement>(null);
   const passwordInput = useRef<HTMLInputElement>(null);
 
+  const validatePassword = (password: string) => password.match(/[A-Za-z]/) !== null && password.match(/[0-9]/) !== null;
 
   const navigate = useNavigate();
   const onSubmit = async (evt: FormEvent) => {
     evt.preventDefault();
 
     if(emailInput.current !== null && passwordInput.current !== null){
-
-      const success = await dispatch(loginAction({
+      const authData = {
         email: emailInput.current.value,
         password: passwordInput.current.value,
-      }));
+      };
+
+      const success = validatePassword(authData.password) ? await dispatch(loginAction(authData)) : toast.warn('Ошибка');
+
       if (success) {
         navigate('/');
       }

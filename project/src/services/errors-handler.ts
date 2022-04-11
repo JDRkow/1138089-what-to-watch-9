@@ -1,6 +1,5 @@
 import request from 'axios';
-import { store } from '../store';
-import { setError } from '../store/action';
+import { toast } from 'react-toastify';
 
 type ErrorType = unknown;
 
@@ -14,13 +13,13 @@ export const errorHandle = (error: ErrorType): void => {
   if (response) {
     switch (response.status) {
       case 400:
-        store.dispatch(setError(response.data.error));
+        toast.warn(response.data.error);
         break;
       case 401:
-        store.dispatch(setError(response.data.error));
+        toast.warn(response.data.error);
         break;
       case 404:
-        store.dispatch(setError(response.data.error));
+        toast.warn(response.data.error);
         break;
     }
   }

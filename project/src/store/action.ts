@@ -10,7 +10,9 @@ export const setCurrentGenre = createAction('set current genre', (genre) => ({
 export const setFilms = createAction<Film[]>('set current films');
 
 export const setCurrentFilm = createAction<Film>('set current film');
+export const setPromoFilm = createAction<Film>('set promo film');
 export const setSimillarFilms = createAction<Film[]>('set simillar films');
+export const setFavoriteFilms = createAction<Film[]>('set favorite films');
 export const setReviews = createAction<Review[]>('set reviews');
 export const sendReview = createAction<boolean>('send reviews');
 

@@ -1,4 +1,4 @@
-export default function ReviewStars({setState, rating}: ReviewStarsProps): JSX.Element {
+export default function ReviewStars({setState, isDisable, rating}: ReviewStarsProps): JSX.Element {
   const ratingStarsCount = [];
 
   for (let value = 1; value <= 10; value++) {
@@ -7,10 +7,10 @@ export default function ReviewStars({setState, rating}: ReviewStarsProps): JSX.E
 
   return (
     <div className="rating__stars">
-      {ratingStarsCount.reverse().map((value) =>
+      {ratingStarsCount.reverse().map((value, index) =>
         (
           <>
-            <input onChange={() => setState(value)} className="rating__input" id={`star-${value}`} type="radio" name="rating" value={value} checked={value === rating} />
+            <input disabled={isDisable} onChange={() => setState(value)} className="rating__input" id={`star-${value}`} type="radio" name="rating" value={value} checked={value === rating} />
             <label className="rating__label" htmlFor={`star-${value}`}>Rating {value}</label>
           </>
         ),
@@ -21,6 +21,7 @@ export default function ReviewStars({setState, rating}: ReviewStarsProps): JSX.E
 
 type ReviewStarsProps = {
   rating: number;
+  isDisable: boolean;
   setState: (rating: number) => void;
 }
 

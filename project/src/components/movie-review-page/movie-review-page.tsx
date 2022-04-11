@@ -1,11 +1,16 @@
+import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useAppSelector } from '../../hooks';
 import { store } from '../../store';
-import { setReviewsAction } from '../../store/api-actions';
+import { fetchReviewsAction } from '../../store/api-actions';
+import { format } from 'date-fns';
 
 export default function MovieReviewPage(): JSX.Element{
   const params = useParams();
-  store.dispatch(setReviewsAction(Number(params.id)));
+  useEffect(() => {
+    store.dispatch(fetchReviewsAction(Number(params.id)));
+  }, [params.id]);
+
   const reviews = useAppSelector((state) => state.reviews);
   return(
     <div className="film-card__reviews film-card__row">
@@ -16,10 +21,10 @@ export default function MovieReviewPage(): JSX.Element{
               <p className="review__text">{review.comment}</p>
               <footer className="review__details">
                 <cite className="review__author">{review.user.name}</cite>
-                <time className="review__date" dateTime="2016-12-24">{review.date}</time>
+                <time className="review__date" dateTime="2016-12-24">{format(new Date(review.date), 'MMMM d, yyyy')}</time>
               </footer>
             </blockquote>
-            <div className="review__rating">{review.rating.toString}</div>
+            <div className="review__rating">{review.rating}</div>
           </div>
         ))}
       </div>

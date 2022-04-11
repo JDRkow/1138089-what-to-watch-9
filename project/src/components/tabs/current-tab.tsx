@@ -1,3 +1,4 @@
+import { Navigate } from 'react-router-dom';
 import { Film } from '../../types/film';
 import { MoviePageTabNames } from '../../types/movie-page-tab-names';
 import MoviePageDetails from '../movie-page-details/movie-page-details';
@@ -15,8 +16,10 @@ function CurrentTab({activeTab, film}: currentTabProps): JSX.Element {
       return <MoviePageDetails film={film} />;
     case MoviePageTabNames.Reviews:
       return <MovieReviewPage />;
-    default:
+    case MoviePageTabNames.Overview:
       return <MoviePageOverview film={film}/>;
+    default:
+      return <Navigate to='/404' />;
   }
 }
 

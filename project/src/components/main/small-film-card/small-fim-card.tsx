@@ -29,7 +29,7 @@ export default function SmallFilmCard({film}: {film: Film}): JSX.Element{
         <VideoPreview src={previewVideoLink} poster={previewImage} isActive={isActive} />
       </div>
       <h3 className="small-film-card__title">
-        <Link className="small-film-card__link" to={`/films/${id}`}>{name}</Link>
+        <Link className="small-film-card__link" to={`/films/${id}#overview`}>{name}</Link>
       </h3>
     </>
   );

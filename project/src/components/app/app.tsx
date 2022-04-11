@@ -11,13 +11,15 @@ import { useAppSelector } from '../../hooks';
 import LoadingScreen from '../loading-screen/loading-screen';
 import { checkAuthAction } from '../../store/api-actions';
 import { store } from '../../store';
+import { State } from '../../types/state';
 
 store.dispatch(checkAuthAction());
+const getAuthorizationStatusSelector = (state: State) => state.authorizationStatus;
 
 export default function App(): JSX.Element {
   const isDataLoaded = useAppSelector((state) => state.isDataLoaded);
   const films = useAppSelector((state) => state.films);
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+  const authorizationStatus = useAppSelector(getAuthorizationStatusSelector);
 
 
   if (!isDataLoaded) {

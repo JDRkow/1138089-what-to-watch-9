@@ -4,11 +4,12 @@ import { AuthorizationStatus } from '../const';
 import { errorHandle } from '../services/errors-handler';
 import { dropToken, saveToken } from '../services/token';
 import { AuthData } from '../types/auth-data';
+import { FavoriteFilm } from '../types/favorite-film';
 import { Film } from '../types/film';
 import { Review } from '../types/review';
 import { SendReview } from '../types/send-review';
 import { UserData } from '../types/user-data';
-import { redirectToRoute, requireAuthorization, sendReview, setCurrentFilm, setFilms, setReviews, setSimillarFilms } from './action';
+import { redirectToRoute, requireAuthorization, sendReview, setCurrentFilm, setFavoriteFilms, setFilms, setPromoFilm, setReviews, setSimillarFilms } from './action';
 
 export const setFilmsAsync = createAsyncThunk('fetchFilms', async () => {
   try {
@@ -20,12 +21,12 @@ export const setFilmsAsync = createAsyncThunk('fetchFilms', async () => {
 });
 
 
-export const setCurrentFilmAction = createAsyncThunk(
+export const fetchCurrentFilmAction = createAsyncThunk(
   'fetchCurrentFilm',
   async (id: number) => {
 
     try {
-      const {data} = await api.get<Film>((`/films/${id}`));
+      const { data } = await api.get<Film>((`/films/${id}`));
       store.dispatch(setCurrentFilm(data));
     } catch (error) {
       errorHandle(error);
@@ -34,7 +35,44 @@ export const setCurrentFilmAction = createAsyncThunk(
   },
 );
 
-export const setReviewsAction = createAsyncThunk(
+export const fetchPromoFilmAction = createAsyncThunk(
+  'fetchPromoFilm',
+  async () => {
+
+    try {
+      const { data } = await api.get<Film>('/promo');
+      store.dispatch(setPromoFilm(data));
+    } catch (error) {
+      errorHandle(error);
+      store.dispatch(redirectToRoute('/404'));
+    }
+  },
+);
+
+export const setFavoriteListAction = createAsyncThunk(
+  'fetachFavoriteList',
+  async () => {
+    try {
+      const { data } = await api.get<Film[]>('/favorite');
+      store.dispatch(setFavoriteFilms(data));
+    } catch(error) {
+      errorHandle(error);
+    }
+  },
+);
+
+export const fetachFavoriteFilmListAction = createAsyncThunk(
+  'fetachFavoriteFilmList',
+  async ({filmId, status}: FavoriteFilm) => {
+    try {
+      await api.post(`/favorite/${filmId}/${status}`);
+    } catch(error) {
+      errorHandle(error);
+    }
+  },
+);
+
+export const fetchReviewsAction = createAsyncThunk(
   'fetchReviews',
   async (filmId: number) => {
 
@@ -47,7 +85,7 @@ export const setReviewsAction = createAsyncThunk(
   },
 );
 
-export const sendReviewAction = createAsyncThunk(
+export const fetchReviewAction = createAsyncThunk(
   'fetchReview',
   async ({filmId, rating, comment}: SendReview) => {
     try {
@@ -61,7 +99,7 @@ export const sendReviewAction = createAsyncThunk(
   },
 );
 
-export const setSimillarFilmsAction = createAsyncThunk(
+export const fetchSimillarFilmsAction = createAsyncThunk(
   'fetchSimillarFilms',
   async (id: number) => {
 
@@ -110,7 +148,6 @@ export const checkAuthAction = createAsyncThunk(
       await api.get('/login');
       store.dispatch(requireAuthorization(AuthorizationStatus.Auth));
     } catch(err) {
-      errorHandle(err);
       store.dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
     }
   },
